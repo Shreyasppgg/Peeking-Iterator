@@ -1,0 +1,31 @@
+class PeekingIterator:
+    def __init__(self, iterator):
+        # Initialize with the actual iterator
+        self.iterator = iterator
+        self._has_next = True
+        self._next = None
+        self._advance()
+
+    def _advance(self):
+        """Advance the iterator and store the next element."""
+        try:
+            self._next = next(self.iterator)
+        except StopIteration:
+            self._next = None
+            self._has_next = False
+
+    def peek(self):
+        """Return the next element without advancing."""
+        return self._next
+
+    def next(self):
+        """Return the next element and advance the iterator."""
+        if not self._has_next:
+            raise StopIteration()
+        current = self._next
+        self._advance()
+        return current
+
+    def hasNext(self):
+        """Return True if there are still elements in the iterator."""
+        return self._has_next
